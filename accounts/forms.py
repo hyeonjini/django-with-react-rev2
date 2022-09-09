@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UsernameField
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from .models import User
 
@@ -29,7 +30,7 @@ class SignupForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username",)
+        fields = ("username", "email", "first_name", "last_name")
         field_classes = {'username': UsernameField}
 
     def __init__(self, *args, **kwargs):
@@ -38,6 +39,10 @@ class SignupForm(forms.ModelForm):
             self.fields[self._meta.model.USERNAME_FIELD].widget.attrs[
                 "autofocus"
             ] = True
+
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -65,4 +70,5 @@ class SignupForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
+
         return user
