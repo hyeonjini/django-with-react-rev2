@@ -56,8 +56,10 @@ INSTALLED_APPS = [
     'bootstrap4',
     'debug_toolbar',
     'django_pydenticon',
+    'easy_thumbnails',
     # Locals Apps
     'accounts',
+    'instagram',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +170,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 WELCOME_EMAIL_SENDER = "choihj94@gmail.com"
+
+# Login redirect url
+LOGIN_REDIRECT_URL = "/"
